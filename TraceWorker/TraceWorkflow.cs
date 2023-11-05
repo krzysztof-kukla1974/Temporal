@@ -16,6 +16,7 @@ public class O365CollectorWorkflow
             new() { ScheduleToCloseTimeout = TimeSpan.FromMinutes(DEFAULT_TIMEOUT) });
         Console.WriteLine($"Starting Workflow {workflowId}");
         await w;
+
         Console.WriteLine($"Workflow {workflowId} completed");
         return w.Result;
     }
