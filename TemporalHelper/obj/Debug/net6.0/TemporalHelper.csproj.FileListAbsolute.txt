@@ -1,0 +1,12 @@
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/bin/Debug/net6.0/TemporalHelper.deps.json
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/bin/Debug/net6.0/TemporalHelper.dll
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/bin/Debug/net6.0/TemporalHelper.pdb
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.csproj.AssemblyReference.cache
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.GeneratedMSBuildEditorConfig.editorconfig
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.AssemblyInfoInputs.cache
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.AssemblyInfo.cs
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.csproj.CoreCompileInputs.cache
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.dll
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/refint/TemporalHelper.dll
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/TemporalHelper.pdb
+/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/Debug/net6.0/ref/TemporalHelper.dll

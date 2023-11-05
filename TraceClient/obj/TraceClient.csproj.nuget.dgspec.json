@@ -1,0 +1,202 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/krzysztof.kukla/Projects/Temporal/TraceClient/TraceClient.csproj": {}
+  },
+  "projects": {
+    "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/TemporalHelper.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/TemporalHelper.csproj",
+        "projectName": "TemporalHelper",
+        "projectPath": "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/TemporalHelper.csproj",
+        "packagesPath": "/Users/krzysztof.kukla/.nuget/packages/",
+        "outputPath": "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/krzysztof.kukla/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.310/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/krzysztof.kukla/Projects/Temporal/TraceClient/TraceClient.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/krzysztof.kukla/Projects/Temporal/TraceClient/TraceClient.csproj",
+        "projectName": "TraceClient",
+        "projectPath": "/Users/krzysztof.kukla/Projects/Temporal/TraceClient/TraceClient.csproj",
+        "packagesPath": "/Users/krzysztof.kukla/.nuget/packages/",
+        "outputPath": "/Users/krzysztof.kukla/Projects/Temporal/TraceClient/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/krzysztof.kukla/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/TemporalHelper.csproj": {
+                "projectPath": "/Users/krzysztof.kukla/Projects/Temporal/TemporalHelper/TemporalHelper.csproj"
+              },
+              "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/TraceWorker.csproj": {
+                "projectPath": "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/TraceWorker.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Temporalio": {
+              "target": "Package",
+              "version": "[0.1.0-beta2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.310/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/TraceWorker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/TraceWorker.csproj",
+        "projectName": "TraceWorker",
+        "projectPath": "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/TraceWorker.csproj",
+        "packagesPath": "/Users/krzysztof.kukla/.nuget/packages/",
+        "outputPath": "/Users/krzysztof.kukla/Projects/Temporal/TraceWorker/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/krzysztof.kukla/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Azure.Core": {
+              "target": "Package",
+              "version": "[1.35.0, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.10.3, )"
+            },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.54, )"
+            },
+            "Microsoft.Graph": {
+              "target": "Package",
+              "version": "[5.33.0, )"
+            },
+            "Temporalio": {
+              "target": "Package",
+              "version": "[0.1.0-beta2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.310/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
