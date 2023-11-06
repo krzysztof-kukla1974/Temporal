@@ -45,26 +45,19 @@ public class O365CollectorActivity
 
     private static string HTMLToTextExt(string s)
     {
-        // Remove new lines since they are not visible in HTML
         s = s.Replace("\u200C", " ");
         s = s.Replace("\r", " ");
         s = s.Replace("\n", " ");
         s = s.Replace("\"", "\'");
-        // Remove tab spaces  
         s = s.Replace("\t", " ");
-        // Replace special characters like &, <, >, " etc.  
         StringBuilder sb = new StringBuilder(s);
-        // Note: There are many more special characters, these are just  
-        // most common. You can add new characters in this arrays if needed  
         string[] OldWords = { "&nbsp;", "&amp;", "&quot;", "&lt;", "&gt;", "&reg;", "&copy;", "&bull;", "&trade;", "&#39;" };
         string[] NewWords = { " ", "&", "\'", "<", ">", "Â®", "Â©", "â€¢", "â„¢", "\'" };
         for (int i = 0; i < OldWords.Length; i++)
         {
             sb.Replace(OldWords[i], NewWords[i]);
         }
-        // Finally, remove all HTML tags and return plain text
-        s = System.Text.RegularExpressions.Regex.Replace(sb.ToString(), "<[^>]*>", "");
-        // Remove multiple white spaces from HTML  
+        s = Regex.Replace(sb.ToString(), "<[^>]*>", "");
         s = Regex.Replace(s, "\\s+", " ");
         return s;
     }
