@@ -1,3 +1,6 @@
+# Git
+.gitignore
+
 # globs
 Makefile.in
 *.userprefs
@@ -407,3 +410,6 @@ ASALocalRun/
 # Bin and Obj folders
 bin/
 obj/
+
+# VS Code
+launch.json
