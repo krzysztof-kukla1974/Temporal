@@ -2,7 +2,10 @@
 
 using Temporalio.Client;
 using TemporalHelper;
+using Azure.Storage.Files.DataLake;
+using Azure;
 
+// Tracing parameters
 string workerName = "O365CollectorWorkflow";
 string workflowId = Protocol.GenerateTemporalGuid(workerName);
 string host = "localhost:7233";
@@ -15,22 +18,32 @@ string folderName = "Inbox";
 string dateFromStr = "2023-05-01";
 string dateToStr = "2023-05-05";
 string searches = "consequat,gubergren,voluptua,erat";
-string directoryPath = Path.Combine("/Users/krzysztof.kukla/Downloads", tenantId, clientId);
+
+// ADLS parameters
+string adlsUri = "https://kkadls1.blob.core.windows.net";
+string fileSystemName = "file1";
+string sasToken = "?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-12-13T04:37:44Z&st=2023-11-07T20:37:44Z&spr=https&sig=p2zR0hXZhjttv8dl7Wn3gTO4u28pMrkkiIzdU3F7rOY%3D";
+string rootFolder = "/TRACE";
+string directoryPath = Path.Combine(rootFolder, tenantId, clientId);
 string fileName = dateFromStr + "_" + dateToStr + ".json";
-string filePath = Path.Combine(directoryPath, fileName);
 
 Console.WriteLine($"Starting {workerName} client");
 
 var client = await TemporalClient.ConnectAsync(new(host));
 
-Console.WriteLine($"Starting Workflow {workflowId}");
+Console.WriteLine($"Running Workflow {workflowId}...");
 
 var handle = await client.StartWorkflowAsync(
     (O365CollectorWorkflow wf) => wf.RunAsync(tenantId, clientId, clientSecret, userPrincipalNames, folderName, dateFromStr, dateToStr, searches),
     new WorkflowOptions(workflowId, queueName));
 
 var result = await handle.GetResultAsync();
-Directory.CreateDirectory(directoryPath);
-File.WriteAllText(filePath, result);
 
-Console.WriteLine($"Workflow {workflowId} completed.\nResults stored in {filePath} file.");
+Console.WriteLine($"Workflow {workflowId} completed");
+Console.WriteLine($"Storing results in {adlsUri}{directoryPath}...");
+
+DataLakeFileSystemClient fileSystemClient = Adls.GetFileSystemClient(adlsUri, sasToken, fileSystemName);
+DataLakeDirectoryClient directoryClient = await Adls.CreateDirectory(fileSystemClient, directoryPath);
+Response<Azure.Storage.Files.DataLake.Models.PathInfo> response = await Adls.UploadFile(directoryClient, fileName, result);
+
+Console.WriteLine($"Results file {fileName} uploaded");
