@@ -7,19 +7,14 @@ using Microsoft.Graph.Models;
 using System.Text;
 using System.Text.RegularExpressions;
 using Temporalio.Activities;
+using TemporalHelper;
+using System.Text.Json;
 
 public class O365CollectorActivity
 {
     private static string EMPTY_JSON = "{}";
     private static bool isBody = false;
-
-    private static string tenantId = "";
-    private static string clientId = "";
-    private static string clientSecret = "";
-    private static string[] userPrincipalNames = { };
-    private static string folderName = "";
-    private static string dateStr = "";
-    private static string[] searches = { };
+    private static InputTraceWorkflowParameters? p;
 
     private static string HTMLToText(string s)
     {
@@ -159,24 +154,28 @@ public class O365CollectorActivity
         return tmp.ToString();
     }
 
-    public static async Task<string> CollectAllUsers()
+    public static async Task<string> CollectAllUsers(string dateStr)
     {
-        var graphClient = Authenticate(tenantId, clientId, clientSecret);
+        if (p == null)
+        {
+            return "";
+        }
+        var graphClient = Authenticate(p.TenantId, p.ClientId ?? "", p.ClientSecret ?? "");
         var tmp = new StringBuilder();
 
         tmp.Append("{");
         tmp.Append("\"Date\":\"").Append(dateStr).Append("\",");
         tmp.Append("\"Users\":");
         tmp.Append("[");
-        for (int i = 0; i < userPrincipalNames.Length; i++)
+        for (int i = 0; i < p.UserPrincipalNames.Length; i++)
         {
-            Console.WriteLine($"Exporting User: {userPrincipalNames[i]}");
-            tmp.Append(await CollectUser(graphClient, userPrincipalNames[i], folderName, dateStr, searches));
-            if (i != userPrincipalNames.Length - 1)
+            Console.WriteLine($"Exporting User: {p.UserPrincipalNames[i]}");
+            tmp.Append(await CollectUser(graphClient, p.UserPrincipalNames[i], p.FolderName, dateStr, p.Searches));
+            if (i != p.UserPrincipalNames.Length - 1)
             {
                 tmp.Append(",");
             }
-            Console.WriteLine($"User: {userPrincipalNames[i]} exported");
+            Console.WriteLine($"User: {p.UserPrincipalNames[i]} exported");
         }
         tmp.Append("]");
         tmp.Append("}");
@@ -184,48 +183,40 @@ public class O365CollectorActivity
         return tmp.ToString();
     }
 
-    public static async Task<string> RunAsync()
+    public static async Task<string> RunAsync(string dateStr)
     {
-        return await CollectAllUsers();
+        return await CollectAllUsers(dateStr);
     }
 
     [Activity]
-    public string CollectDay(string tenantIdIn, string clientIdIn, string clientSecretIn, string userPrincipalNamesIn, string folderNameIn, string dateStrIn, string searchesIn)
+    public string CollectFromToDate(string parameters)
     {
-        tenantId = tenantIdIn;
-        clientId = clientIdIn;
-        clientSecret = clientSecretIn;
-        userPrincipalNames = userPrincipalNamesIn.Split(",");
-        folderName = folderNameIn;
-        dateStr = dateStrIn;
-        searches = searchesIn.Split(",");
+        p = JsonSerializer.Deserialize<InputTraceWorkflowParameters>(parameters);
+        if (p == null)
+        {
+            return "";
+        }
+        string directoryName = Path.Combine(p.RootFolder, p.TenantId, p.ClientId);
 
-        return RunAsync().Result;
-    }
+        StringBuilder resultsCom = new StringBuilder();
+        DateTime dateFrom = DateTime.Parse(p.DateFromStr);
+        DateTime dateTo = DateTime.Parse(p.DateToStr);
 
-    [Activity]
-    public string CollectFromToDate(string tenantIdIn, string clientIdIn, string clientSecretIn, string userPrincipalNamesIn, string folderNameIn, string dateFromStrIn, string dateToStrIn, string searchesIn)
-    {
-        StringBuilder tmp = new StringBuilder();
-        DateTime dateFrom = DateTime.Parse(dateFromStrIn);
-        DateTime dateTo = DateTime.Parse(dateToStrIn);
-
-        tmp.Append("{");
-        tmp.Append("\"Dates\":");
-        tmp.Append("[");
         for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
         {
             Console.WriteLine($"Exporting Date: {date.ToString("yyyy-MM-dd")}");
-            tmp.Append(CollectDay(tenantIdIn, clientIdIn, clientSecretIn, userPrincipalNamesIn, folderNameIn, date.ToString("yyyy-MM-dd"), searchesIn));
-            if(date != dateTo)
+            string dateStr = date.ToString("yyyy-MM-dd");
+            string fileName = dateStr + ".json";
+            string results = RunAsync(dateStr).Result;
+            Console.WriteLine($"Storing results...");
+            Adls.UploadFileToFolder(p.AdlsUri, p.SasToken, p.FileSystemName, directoryName, fileName, results);
+            Console.WriteLine($"Results file {fileName} uploaded onto {p.AdlsUri}{directoryName}");
+            resultsCom.Append(p.AdlsUri).Append(directoryName).Append(fileName);
+            if (date != dateTo)
             {
-                tmp.Append(",");
+                resultsCom.Append("\n");
             }
-            Console.WriteLine($"Date: {date.ToString("yyyy-MM-dd")} exported");
         }
-        tmp.Append("]");
-        tmp.Append("}");
-
-        return tmp.ToString();
+        return resultsCom.ToString();
     }
 }
