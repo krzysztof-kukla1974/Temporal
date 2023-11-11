@@ -48,9 +48,39 @@ public class InputTraceWorkflowParameters
         this.RootFolder = "";
     }
 
-    override
-    public string ToString()
+    override public string ToString()
     {
         return JsonSerializer.Serialize(this);
+    }
+}
+
+public class OutputTraceWorkflowParameters
+{
+    public List<DayReport> Report { get; set; }
+
+    public OutputTraceWorkflowParameters()
+    {
+        this.Report = new List<DayReport>();
+    }
+
+    override public string ToString()
+    {
+        return JsonSerializer.Serialize(this);
+    }
+}
+
+public class DayReport
+{
+    public string DayStr { get; set; }
+    public string Status { get; set; }
+    public string Preview { get; set; }
+    public string AdlsFilePath { get; set; }
+
+    public DayReport()
+    {
+        this.DayStr = "";
+        this.Status = "";
+        this.Preview = "";
+        this.AdlsFilePath = "";
     }
 }

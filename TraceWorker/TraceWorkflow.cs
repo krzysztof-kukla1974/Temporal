@@ -1,6 +1,5 @@
 ﻿namespace Trace;
 
-using System.IO.Enumeration;
 using Temporalio.Workflows;
 
 [Workflow]

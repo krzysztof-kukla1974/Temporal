@@ -14,7 +14,7 @@ public class O365CollectorActivity
 {
     private static string EMPTY_JSON = "{}";
     private static bool isBody = false;
-    private static InputTraceWorkflowParameters? p;
+    private static InputTraceWorkflowParameters? ip;
 
     private static string HTMLToText(string s)
     {
@@ -156,26 +156,26 @@ public class O365CollectorActivity
 
     public static async Task<string> CollectAllUsers(string dateStr)
     {
-        if (p == null)
+        if (ip == null)
         {
             return "";
         }
-        var graphClient = Authenticate(p.TenantId, p.ClientId ?? "", p.ClientSecret ?? "");
+        var graphClient = Authenticate(ip.TenantId, ip.ClientId, ip.ClientSecret);
         var tmp = new StringBuilder();
 
         tmp.Append("{");
         tmp.Append("\"Date\":\"").Append(dateStr).Append("\",");
         tmp.Append("\"Users\":");
         tmp.Append("[");
-        for (int i = 0; i < p.UserPrincipalNames.Length; i++)
+        for (int i = 0; i < ip.UserPrincipalNames.Length; i++)
         {
-            Console.WriteLine($"Exporting User: {p.UserPrincipalNames[i]}");
-            tmp.Append(await CollectUser(graphClient, p.UserPrincipalNames[i], p.FolderName, dateStr, p.Searches));
-            if (i != p.UserPrincipalNames.Length - 1)
+            Console.WriteLine($"Exporting User: {ip.UserPrincipalNames[i]}");
+            tmp.Append(await CollectUser(graphClient, ip.UserPrincipalNames[i], ip.FolderName, dateStr, ip.Searches));
+            if (i != ip.UserPrincipalNames.Length - 1)
             {
                 tmp.Append(",");
             }
-            Console.WriteLine($"User: {p.UserPrincipalNames[i]} exported");
+            Console.WriteLine($"User: {ip.UserPrincipalNames[i]} exported");
         }
         tmp.Append("]");
         tmp.Append("}");
@@ -191,32 +191,39 @@ public class O365CollectorActivity
     [Activity]
     public string CollectFromToDate(string parameters)
     {
-        p = JsonSerializer.Deserialize<InputTraceWorkflowParameters>(parameters);
-        if (p == null)
+        ip = JsonSerializer.Deserialize<InputTraceWorkflowParameters>(parameters);
+        if (ip == null)
         {
             return "";
         }
-        string directoryName = Path.Combine(p.RootFolder, p.TenantId, p.ClientId);
+        Console.WriteLine("Input parameters:");
+        Console.WriteLine(ip.ToString());
 
-        StringBuilder resultsCom = new StringBuilder();
-        DateTime dateFrom = DateTime.Parse(p.DateFromStr);
-        DateTime dateTo = DateTime.Parse(p.DateToStr);
+        string directoryName = Path.Combine(ip.RootFolder, ip.TenantId, ip.ClientId);
+        DateTime dateFrom = DateTime.Parse(ip.DateFromStr);
+        DateTime dateTo = DateTime.Parse(ip.DateToStr);
+        OutputTraceWorkflowParameters op = new OutputTraceWorkflowParameters();
 
         for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
         {
-            Console.WriteLine($"Exporting Date: {date.ToString("yyyy-MM-dd")}");
             string dateStr = date.ToString("yyyy-MM-dd");
             string fileName = dateStr + ".json";
+
+            Console.WriteLine($"Exporting Date: {dateStr}");
             string results = RunAsync(dateStr).Result;
-            Console.WriteLine($"Storing results...");
-            Adls.UploadFileToFolder(p.AdlsUri, p.SasToken, p.FileSystemName, directoryName, fileName, results);
-            Console.WriteLine($"Results file {fileName} uploaded onto {p.AdlsUri}{directoryName}");
-            resultsCom.Append(p.AdlsUri).Append(directoryName).Append(fileName);
-            if (date != dateTo)
+
+            Console.WriteLine($"Uploading results to Adls...");
+            Adls.UploadFileToFolder(ip.AdlsUri, ip.SasToken, ip.FileSystemName, directoryName, fileName, results);
+            Console.WriteLine($"Results file {fileName} uploaded onto {ip.AdlsUri}{directoryName}");
+
+            op.Report.Add(new DayReport
             {
-                resultsCom.Append("\n");
-            }
+                DayStr = dateStr,
+                Status = "Completed",
+                Preview = "", //results.Substring(0, 200),
+                AdlsFilePath = ip.AdlsUri + directoryName + fileName
+            });
         }
-        return resultsCom.ToString();
+        return op.ToString();
     }
 }
