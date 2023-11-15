@@ -202,7 +202,7 @@ public class O365CollectorActivity
         string directoryName = Path.Combine(ip.RootFolder, ip.TenantId, ip.ClientId);
         DateTime dateFrom = DateTime.Parse(ip.DateFromStr);
         DateTime dateTo = DateTime.Parse(ip.DateToStr);
-        OutputTraceWorkflowParameters op = new OutputTraceWorkflowParameters();
+        OutputTraceWorkflowParameters op = new ();
 
         for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
         {
