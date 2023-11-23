@@ -12,5 +12,3 @@ docker rmi $IMAGE_NAME
 docker build --platform=$PLATFORM -t $IMAGE_NAME -f Dockerfile .
 docker save $IMAGE_NAME -o ~/Downloads/$IMAGE_NAME.img
 docker run --name=t1 -d --network temporal-network $IMAGE_NAME $TEMPORAL_HOST
-docker run --name=t2 -d --network temporal-network $IMAGE_NAME $TEMPORAL_HOST
-docker run --name=t3 -d --network temporal-network $IMAGE_NAME $TEMPORAL_HOST
