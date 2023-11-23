@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1705.6
@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceClient", "TraceClient\TraceClient.csproj", "{D68F42B0-759F-4DED-BFF0-4476602ADCE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraceWorker", "TraceWorker\TraceWorker.csproj", "{D3CC288B-7134-43A5-ACF4-0A7859C42814}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatePIWorker", "CalculatePIWorker\CalculatePIWorker.csproj", "{EF798E85-6324-46B1-8E86-D15D88020517}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemporalHelper", "TemporalHelper\TemporalHelper.csproj", "{54954645-74EE-4D48-ABAE-16A910F03776}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{D3CC288B-7134-43A5-ACF4-0A7859C42814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3CC288B-7134-43A5-ACF4-0A7859C42814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3CC288B-7134-43A5-ACF4-0A7859C42814}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF798E85-6324-46B1-8E86-D15D88020517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF798E85-6324-46B1-8E86-D15D88020517}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF798E85-6324-46B1-8E86-D15D88020517}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF798E85-6324-46B1-8E86-D15D88020517}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54954645-74EE-4D48-ABAE-16A910F03776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54954645-74EE-4D48-ABAE-16A910F03776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54954645-74EE-4D48-ABAE-16A910F03776}.Release|Any CPU.ActiveCfg = Release|Any CPU
