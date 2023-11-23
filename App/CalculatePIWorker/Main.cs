@@ -3,9 +3,19 @@
 using Temporalio.Client;
 using Temporalio.Worker;
 
+string workerName = "O365CollectorWorkflow";
+string host = "127.0.0.1:7233";
+if (args.Length > 0)
+{
+    host = args[0];
+}
+string queueName = "trace-task-queue";
+
 try
 {
-    var client = await TemporalClient.ConnectAsync(new("localhost:7233"));
+    Console.WriteLine($"Connecting to {host}");
+    var client = await TemporalClient.ConnectAsync(new(host));
+    Console.WriteLine("Connected");
 
     using var tokenSource = new CancellationTokenSource();
     Console.CancelKeyPress += (_, eventArgs) =>
@@ -19,12 +29,12 @@ try
     using var worker = new TemporalWorker
     (
         client: client,
-        options: new TemporalWorkerOptions("my-task-queue").
+        options: new TemporalWorkerOptions(queueName).
             AddActivity(activities.CalculatePI).
             AddWorkflow<CalculatePIWorkflow>()
     );
 
-    Console.WriteLine("Running worker");
+    Console.WriteLine($"Starting workflow: {workerName}");
     await worker.ExecuteAsync(tokenSource.Token);
 }
 catch (InvalidOperationException ioEx)
