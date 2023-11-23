@@ -33,8 +33,7 @@
             "task": "clean",
             "problemMatcher": [
                 "$msCompile"
-            ],
-            "group": "clean"
+            ]
         }
     ]
 }
