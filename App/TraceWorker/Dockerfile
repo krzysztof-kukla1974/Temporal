@@ -6,7 +6,7 @@ COPY . ./
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
-RUN dotnet publish TraceWorker.csproj -c Release -o out
+RUN dotnet publish TraceWorker.csproj -c Release -o out --no-build
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0

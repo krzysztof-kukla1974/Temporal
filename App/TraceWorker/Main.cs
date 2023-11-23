@@ -4,12 +4,18 @@ using Temporalio.Client;
 using Temporalio.Worker;
 
 string workerName = "O365CollectorWorkflow";
-string host = "localhost:7233";
-string queueName = "my-task-queue";
+string host = "127.0.0.1:7233";
+if (args.Length > 0)
+{
+    host = args[0];
+}
+string queueName = "trace-task-queue";
 
 try
 {
+    Console.WriteLine($"Connecting to {host}");
     var client = await TemporalClient.ConnectAsync(new(host));
+    Console.WriteLine("Connected");
 
     using var tokenSource = new CancellationTokenSource();
     Console.CancelKeyPress += (_, eventArgs) =>
