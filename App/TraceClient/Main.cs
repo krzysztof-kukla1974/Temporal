@@ -18,9 +18,9 @@ InputTraceWorkflowParameters p = new InputTraceWorkflowParameters
     DateFromStr = args[1], //"2023-01-01"
     DateToStr = args[2], //"2023-01-05"
     Searches = "consequat,gubergren,voluptua,erat".Split(","),
-    AdlsUri = "https://kkadls1.blob.core.windows.net",
-    FileSystemName = "file1",
-    SasToken = "?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-12-13T04:37:44Z&st=2023-11-07T20:37:44Z&spr=https&sig=p2zR0hXZhjttv8dl7Wn3gTO4u28pMrkkiIzdU3F7rOY%3D",
+    AdlsUri = "https://kkafs1.blob.core.windows.net",
+    FileSystemName = "blob1",
+    SasToken = "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2024-10-17T03:22:54Z&st=2024-08-21T19:22:54Z&spr=https&sig=j0vjjH7lkHcuCgLxzXld5o8JZ%2BYIguh50mQFuxBG0wI%3D",
     RootFolder = "/TRACE"
 };
 

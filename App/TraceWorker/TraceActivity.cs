@@ -214,7 +214,7 @@ public class O365CollectorActivity
 
             Console.WriteLine($"Uploading results to Adls...");
             Adls.UploadFileToFolder(ip.AdlsUri, ip.SasToken, ip.FileSystemName, directoryName, fileName, results);
-            Console.WriteLine($"Results file {fileName} uploaded onto {ip.AdlsUri}{directoryName}");
+            Console.WriteLine($"Results file {fileName} uploaded onto {ip.AdlsUri}/{ip.FileSystemName}{directoryName}");
 
             op.Report.Add(new DayReport
             {

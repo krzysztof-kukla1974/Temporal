@@ -35,8 +35,15 @@ public class Adls
 
     public static async void UploadFileToFolder(string adlsUri, string sasToken, string fileSystemName, string directoryName, string fileName, string fileContent)
     {
+        Console.WriteLine("##### adlsUri: " + adlsUri);
+        Console.WriteLine("##### sasToken: " + sasToken);
+        Console.WriteLine("##### fileSystemName: " + fileSystemName);
+        Console.WriteLine("##### directoryName: " + directoryName);
+        Console.WriteLine("##### fileName: " + fileName);
         DataLakeFileSystemClient fileSystemClient = GetFileSystemClient(adlsUri, sasToken, fileSystemName);
+        Console.WriteLine("##### Got File System Client");
         DataLakeDirectoryClient directoryClient = await CreateDirectory(fileSystemClient, directoryName);
+        Console.WriteLine("##### Created Directory");
         await Adls.UploadFile(directoryClient, fileName, fileContent);
     }
 }

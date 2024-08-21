@@ -9,6 +9,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Files.DataLake" Version="12.17.1" />
+    <PackageReference Include="Azure.Storage.Files.DataLake" Version="12.19.1" />
   </ItemGroup>
 </Project>
