@@ -17,7 +17,7 @@ InputTraceWorkflowParameters p = new InputTraceWorkflowParameters
     FolderName = "Inbox",
     DateFromStr = args[1], //"2023-01-01"
     DateToStr = args[2], //"2023-01-05"
-    Searches = "consequat,gubergren,voluptua,erat".Split(","),
+    Searches = "russia,killed,bomb,rocket".Split(","),
     AdlsUri = "https://kkafs1.blob.core.windows.net",
     FileSystemName = "blob1",
     SasToken = "sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2024-10-17T03:22:54Z&st=2024-08-21T19:22:54Z&spr=https&sig=j0vjjH7lkHcuCgLxzXld5o8JZ%2BYIguh50mQFuxBG0wI%3D",
